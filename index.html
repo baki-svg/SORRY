@@ -22,18 +22,24 @@
             margin-top: 20px;
             border-radius: 10px;
         }
-        #forgiveButton {
+        .button-container {
+            margin-top: 20px;
+        }
+        .choice-button {
             font-size: 20px;
             padding: 10px 20px;
-            background: #d32f2f;
-            color: white;
+            margin: 10px;
             border: none;
             cursor: pointer;
-            margin-top: 20px;
             border-radius: 5px;
         }
-        #forgiveButton:hover {
-            background: #b71c1c;
+        .yes-button {
+            background: #4CAF50; /* Green */
+            color: white;
+        }
+        .no-button {
+            background: #d32f2f; /* Red */
+            color: white;
         }
     </style>
 </head>
@@ -42,8 +48,10 @@
     <h1>I'm Really Sorry 😔</h1>
     <img id="sorryImage" src="https://raw.githubusercontent.com/baki-svg/SORRY/refs/heads/main/a386e048-6099-464e-b4a1-3aac7c2a0025.jpeg" alt="Sorry Image">
     
-    <br><br>
-    <button id="forgiveButton">Forgive Me?</button>
+    <div class="button-container">
+        <button class="choice-button yes-button" onclick="forgiveMe()">Yes</button>
+        <button class="choice-button no-button" onclick="askAgain()">No</button>
+    </div>
 
     <!-- Background Music (YouTube Autoplay) -->
     <iframe width="0" height="0" 
@@ -53,11 +61,34 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.0"></script>
     <script>
-        document.getElementById("forgiveButton").addEventListener("click", function() {
+        let attempts = 0; // Counter for "No" clicks
+
+        function forgiveMe() {
             document.body.style.backgroundColor = "#ffccff"; // Change background to pink
             document.body.innerHTML = "❤️❤️ SORRY ACCEPTED ❤️❤️"; // Change text to hearts
             confetti(); // Confetti effect
-        });
+        }
+
+        function askAgain() {
+            attempts++;
+            if (attempts === 1) {
+                document.body.innerHTML = `
+                    <h1>Are you sure? 🥺</h1>
+                    <div class="button-container">
+                        <button class="choice-button yes-button" onclick="forgiveMe()">Yes</button>
+                        <button class="choice-button no-button" onclick="askAgain()">No</button>
+                    </div>
+                `;
+            } else if (attempts === 2) {
+                document.body.innerHTML = `
+                    <h1>Think again... 😊</h1>
+                    <div class="button-container">
+                        <button class="choice-button yes-button" onclick="forgiveMe()">Yes</button>
+                        <button class="choice-button yes-button" onclick="forgiveMe()">Yes</button>
+                    </div>
+                `;
+            }
+        }
     </script>
 
 </body>
